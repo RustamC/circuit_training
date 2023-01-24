@@ -40,8 +40,14 @@ RUN ${APT_COMMAND} update && ${APT_COMMAND} install -y --no-install-recommends \
 # Adds repository to pull versions of python from.
 RUN add-apt-repository ppa:deadsnakes/ppa
 
+# Adds support for 32-bit apps (hmetis)
+RUN dpkg --add-architecture i386
+
 # Installs various versions of python and then cleans up apt.
 RUN ${APT_COMMAND} update && ${APT_COMMAND} install -y --no-install-recommends \
+        libc6:i386 \
+        libncurses5:i386 \
+        libstdc++6:i386 \
         $python_version-dev \
         $python_version-distutils \
         && \
@@ -57,7 +63,9 @@ RUN chmod 555 /usr/local/bin/plc_wrapper_main
 RUN curl -O https://bootstrap.pypa.io/get-pip.py
 
 RUN $python_version get-pip.py
-RUN $python_version -mpip --no-cache-dir install $tf_agents_version sortedcontainers
+RUN $python_version -mpip --no-cache-dir install $tf_agents_version sortedcontainers gdown
 
+RUN gdown 1KfsYiQGp3PRlU1htXZ_G_VRDBETpPkdh -O /usr/local/bin/hmetis
+RUN chmod 555 /usr/local/bin/hmetis
 
 CMD ["/bin/bash"]
