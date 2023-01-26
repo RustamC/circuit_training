@@ -43,9 +43,10 @@ RUN ${APT_COMMAND} update && ${APT_COMMAND} install -y --no-install-recommends \
         qt5-default \
         qt5-image-formats-plugins \
         libqt5gui5 \
-        libqt5gui5-gles \
-        libqt5core5a
+        libqt5core5a \
+        binutils
         
+RUN strip --remove-section=.note.ABI-tag /usr/lib/x86_64-linux-gnu/libQt5Core.so.5
 
 # Adds repository to pull versions of python from.
 RUN add-apt-repository ppa:deadsnakes/ppa
