@@ -119,11 +119,14 @@ b` followed by `s` and then select the specified session.
 ```shell
 # Sets the environment variables needed by each job. These variables are
 # inherited by the tmux sessions created in the next step.
+# Sequence length = NUM_TOTAL_HARD_MACROS + 1
 $  export ROOT_DIR=./logs/run_00
 $  export REVERB_PORT=8008
 $  export REVERB_SERVER="127.0.0.1:${REVERB_PORT}"
-$  export NETLIST_FILE=./circuit_training/environment/test_data/ariane/netlist.pb.txt
-$  export INIT_PLACEMENT=./circuit_training/environment/test_data/ariane/initial.plc
+$  export NETLIST_FILE=./circuit_training/environment/test_data/test_fpi/netlist.pb.txt
+$  export INIT_PLACEMENT=./circuit_training/environment/test_data/test_fpi/initial.plc
+$  export SEQUENCE_LENGTH=11
+$  export NUM_ITERATIONS=100
 
 # Creates all the tmux sessions that will be used.
 $  tmux new-session -d -s reverb_server && \
@@ -131,8 +134,7 @@ $  tmux new-session -d -s reverb_server && \
    tmux new-session -d -s collect_job_01 && \
    tmux new-session -d -s collect_job_02 && \
    tmux new-session -d -s train_job && \
-   tmux new-session -d -s eval_job && \
-   tmux new-session -d -s tb_job
+   tmux new-session -d -s eval_job
 
 # Starts the Replay Buffer (Reverb) Job
 $  tmux attach -t reverb_server
@@ -149,7 +151,9 @@ $  python3 -m circuit_training.learning.train_ppo \
   --num_episodes_per_iteration=16 \
   --global_batch_size=64 \
   --netlist_file=${NETLIST_FILE} \
-  --init_placement=${INIT_PLACEMENT}
+  --init_placement=${INIT_PLACEMENT} \
+  --sequence_length=${SEQUENCE_LENGTH} \
+  --num_iterations=${NUM_ITERATIONS}
 
 # Starts the Collect job
 # Change to the tmux session `collect_job_00`.
@@ -160,7 +164,8 @@ $  python3 -m circuit_training.learning.ppo_collect \
   --variable_container_server_address=${REVERB_SERVER} \
   --task_id=0 \
   --netlist_file=${NETLIST_FILE} \
-  --init_placement=${INIT_PLACEMENT}
+  --init_placement=${INIT_PLACEMENT} \
+  --max_sequence_length=${SEQUENCE_LENGTH}
 
 # Starts the Eval job
 # Change to the tmux session `eval_job`.
@@ -171,11 +176,6 @@ $  python3 -m circuit_training.learning.eval \
   --netlist_file=${NETLIST_FILE} \
   --init_placement=${INIT_PLACEMENT}
 
-# Start Tensorboard.
-# Change to the tmux session `tb_job`.
-# `ctrl + b` followed by `s`
-$  tensorboard dev upload --logdir ./logs
-
 # <Optional>: Starts 2 more collect jobs to speed up training.
 # Change to the tmux session `collect_job_01`.
 # `ctrl + b` followed by `s`
@@ -185,7 +185,8 @@ $  python3 -m circuit_training.learning.ppo_collect \
   --variable_container_server_address=${REVERB_SERVER} \
   --task_id=1 \
   --netlist_file=${NETLIST_FILE} \
-  --init_placement=${INIT_PLACEMENT}
+  --init_placement=${INIT_PLACEMENT} \
+  --max_sequence_length=${SEQUENCE_LENGTH}
 
 # Change to the tmux session `collect_job_02`.
 # `ctrl + b` followed by `s`
@@ -195,7 +196,8 @@ $  python3 -m circuit_training.learning.ppo_collect \
   --variable_container_server_address=${REVERB_SERVER} \
   --task_id=2 \
   --netlist_file=${NETLIST_FILE} \
-  --init_placement=${INIT_PLACEMENT}
+  --init_placement=${INIT_PLACEMENT} \
+  --max_sequence_length=${SEQUENCE_LENGTH}
 
 ```
 
