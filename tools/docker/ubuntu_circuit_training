@@ -58,6 +58,6 @@ RUN curl -O https://bootstrap.pypa.io/get-pip.py
 
 RUN $python_version get-pip.py
 RUN $python_version -mpip --no-cache-dir install $tf_agents_version sortedcontainers
-
+RUN $python_version -mpip install --upgrade numpy==1.23.1
 
 CMD ["/bin/bash"]
