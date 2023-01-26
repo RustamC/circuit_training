@@ -41,7 +41,10 @@ RUN ${APT_COMMAND} update && ${APT_COMMAND} install -y --no-install-recommends \
         libreadline8 \
         libgomp1 \
         qt5-default \
-        qt5-image-formats-plugins
+        qt5-image-formats-plugins \
+        libqt5gui5 \
+        libqt5gui5-gles \
+        libqt5core5a
         
 
 # Adds repository to pull versions of python from.
