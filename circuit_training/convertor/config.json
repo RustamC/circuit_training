@@ -1,0 +1,14 @@
+{
+    "CONVERTOR": "p2m",
+    "DESIGN": "test_macro",
+    "NETLIST": "./test_fpi/design/test_macro.v",
+
+    "DEF": "./test_fpi/design/test_macro.def",
+    "LEFS": ["./test_fpi/lefs/test_macro.lef"],
+    "LIBS": ["./test_fpi/libs/test_macro.lib"],
+    "PB_FILE": "../environment/test_data/test_fpi/netlist.pb.txt",
+    "PLC_FILE": "../environment/test_data/test_fpi/initial.plc",
+    "OPENROAD_EXE": "./utils/openroad",
+
+    "MACRO_CFG": "./test_fpi/test_macro.cfg"
+}

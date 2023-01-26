@@ -35,7 +35,14 @@ RUN ${APT_COMMAND} update && ${APT_COMMAND} install -y --no-install-recommends \
         software-properties-common \
         curl \
         tmux \
-        less
+        less \
+        tcl \
+        tcl-tclreadline \
+        libreadline8 \
+        libgomp1 \
+        qt5-default \
+        qt5-image-formats-plugins
+        
 
 # Adds repository to pull versions of python from.
 RUN add-apt-repository ppa:deadsnakes/ppa
