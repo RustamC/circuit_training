@@ -7,7 +7,7 @@
     "LEFS": ["./test_fpi/lefs/test_macro.lef"],
     "LIBS": ["./test_fpi/libs/test_macro.lib"],
     "PB_FILE": "../environment/test_data/test_fpi/netlist.pb.txt",
-    "PLC_FILE": "../environment/test_data/test_fpi/initial.plc",
+    "PLC_FILE": "../../logs/run_00/111/rl_opt_placement.plc",
     "OPENROAD_EXE": "./utils/openroad",
 
     "MACRO_CFG": "./test_fpi/test_macro.cfg"
