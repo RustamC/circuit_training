@@ -28,7 +28,11 @@ python circuittraining/grouping/grouper_main \
 --alsologtostderr
 """
 
-from collections.abc import Sequence
+import sys
+sys.path.insert(0, '/workspace')
+
+#from collections.abc import Sequence
+from typing import Sequence
 
 from absl import app
 from absl import flags

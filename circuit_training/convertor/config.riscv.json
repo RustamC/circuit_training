@@ -1,0 +1,14 @@
+{
+    "CONVERTOR": "d2p",
+    "DESIGN": "pyfive_top",
+    "NETLIST": "./test_riscv/design/pyfive_top.v",
+
+    "DEF": "./test_riscv/design/pyfive_top.def",
+    "LEFS": ["./test_riscv/lefs/pyfive_top.lef"],
+    "LIBS": ["./test_riscv/libs/pyfive_top.lib"],
+    "PB_FILE": "./netlist.pb.txt",
+    "PLC_FILE": "./zero.plc",
+    "OPENROAD_EXE": "./utils/openroad",
+
+    "MACRO_CFG": "./test_riscv/pyfive_top.cfg"
+}
